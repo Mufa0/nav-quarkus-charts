@@ -11,7 +11,7 @@ secret:
   db_password: cG9zdGdyZXM=
 
 audit_service:
-  url: "http://{{ tpl .Values.global.prefix.audit .}}"
+  url: "http://{{.Release.Name}}-nav-quarkus-audit-service"
   port: 8081
 
 database:

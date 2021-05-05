@@ -22,3 +22,8 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
+
+dependencies:
+    - name: nav-quarkus-audit
+      version: 0.1.x
+      repository: https://mufa0.github.io/helm-repository

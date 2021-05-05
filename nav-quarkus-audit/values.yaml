@@ -1,5 +1,3 @@
-global:
-  audit-prefix: "{{.Release.Name}}-{{.Chart.Name}}"
 config:
   DB_HOST: "{{.Release.Name}}-{{.Chart.Name}}-postgres-service"
   DB_USERNAME: postgres
