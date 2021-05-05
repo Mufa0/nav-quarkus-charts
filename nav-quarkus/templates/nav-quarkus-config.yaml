@@ -10,9 +10,9 @@ data:
   DB_NAME: {{.Values.config.db_name}}
   DB_USERNAME: {{.Values.config.db_username}}
   KEYCLOAK_CLIENTID: {{.Values.keycloak_service.client_id}}
-  KEYCLOAK_SERVICE: {{tpl .Values.keycloak_service.host}}:{{.Values.keycloak_service.port}}/{{.Values.keycloak_service.path}}
-  AUTH_SERVICE: {{.Values.auth_service.url}}:{{.Values.auth_service.port}}
-  AUDIT_SERVICE: {{.Values.audit_service.url}}:{{.Values.audit_service.port}}
+  KEYCLOAK_SERVICE: {{tpl .Values.keycloak_service.host .}}:{{.Values.keycloak_service.port}}/{{.Values.keycloak_service.path}}
+  AUTH_SERVICE: {{tpl .Values.auth_service.url .}}:{{.Values.auth_service.port}}
+  AUDIT_SERVICE: {{tpl .Values.audit_service.url .}}:{{.Values.audit_service.port}}
 ---
 
 apiVersion: v1
