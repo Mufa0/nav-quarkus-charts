@@ -1,0 +1,32 @@
+global:
+  prefix:
+    audit: "placeholder"
+
+config:
+  db_host: "{{.Release.Name}}-{{.Chart.Name}}-postgres-service"
+  db_name: nav-auth
+  db_username: postgres
+
+secret:
+  db_password: cG9zdGdyZXM=
+
+audit_service:
+  url: "http://{{ tpl .Values.global.prefix.audit .}}"
+  port: 8081
+
+database:
+  replicas: 1
+  restartPolicy: Always
+  port: 5432
+  image:
+    url: postgres
+    tag: latest
+    pullPolicy: IfNotPresent
+
+app:
+  port: 8082
+  replicas: 1
+  image:
+    url: mu7a/nav-quarkus-auth
+    tag: "1.0-SNAPSHOT"
+    pullPolicy: Always

@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}-keycloak-service
+spec:
+  selector:
+    app: {{.Release.Name}}-{{.Chart.Name}}-keycloak
+  ports:
+    - name: http
+      port: {{.Values.keycloak.port}}
+      targetPort: {{.Values.keycloak.port}}
+      nodePort: {{.Values.keycloak.nodePort}}
+  type: NodePort
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}-keycloak-deployment
+  labels:
+    app: {{.Release.Name}}-{{.Chart.Name}}-keycloak
+spec:
+  replicas: {{.Values.keycloak.replicas}}
+  template:
+    metadata:
+      name: {{.Release.Name}}-{{.Chart.Name}}-keycloak
+      labels:
+        app: {{.Release.Name}}-{{.Chart.Name}}-keycloak
+    spec:
+      containers:
+        - name: {{.Release.Name}}-{{.Chart.Name}}-keycloak
+          image: {{.Values.keycloak.image.url}}:{{.Values.keycloak.image.tag}}
+          imagePullPolicy: {{.Values.keycloak.image.pullPolicy}}
+          ports:
+            - containerPort: {{.Values.keycloak.port}}
+              protocol: TCP
+              name: http
+          env:
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+          readinessProbe:
+            httpGet:
+              path: /auth/realms/nav
+              port: {{.Values.keycloak.port}}
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-{{.Chart.Name}}-keycloak
